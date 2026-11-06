@@ -13,6 +13,7 @@
   --bg:#f6f7f9; --panel:#ffffff; --ink:#172131; --sub:#5b6676; --line:#dfe3ea;
   --accent:#1f5f8b; --accent-soft:#e3eef6; --budget:#2f8f5b; --over:#c2412d; --over-soft:#fbe9e5; --warn:#a46a00; --warn-soft:#fbf1dc;
   --bar-aw:#2b6fa3; --bar-mn:#7a4fb0; --bar-all:#172131;
+  --age1:#9cc3e0; --age2:#e8c46a; --age3:#e48a5c; --age4:#c2412d;
   --f-display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
   --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
   --f-num:"IBM Plex Mono",ui-monospace,"Consolas",monospace;
@@ -20,11 +21,13 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#10151d; --panel:#171e29; --ink:#e7ecf3; --sub:#9aa6b6; --line:#2a3443;
   --accent:#7db4dd; --accent-soft:#1c2c3c; --budget:#5cc48a; --over:#f0806b; --over-soft:#3a201b; --warn:#e2b04d; --warn-soft:#352a14;
-  --bar-aw:#5c9fd3; --bar-mn:#a985d9; --bar-all:#d5dde8; color-scheme:dark}}
+  --bar-aw:#5c9fd3; --bar-mn:#a985d9; --bar-all:#d5dde8;
+  --age1:#4f7fa3; --age2:#b8953f; --age3:#c46f45; --age4:#f0806b; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#10151d; --panel:#171e29; --ink:#e7ecf3; --sub:#9aa6b6; --line:#2a3443;
   --accent:#7db4dd; --accent-soft:#1c2c3c; --budget:#5cc48a; --over:#f0806b; --over-soft:#3a201b; --warn:#e2b04d; --warn-soft:#352a14;
-  --bar-aw:#5c9fd3; --bar-mn:#a985d9; --bar-all:#d5dde8; color-scheme:dark}
+  --bar-aw:#5c9fd3; --bar-mn:#a985d9; --bar-all:#d5dde8;
+  --age1:#4f7fa3; --age2:#b8953f; --age3:#c46f45; --age4:#f0806b; color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.7}
 .wrap{max-width:960px;margin:0 auto;padding-block:32px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
 h1,h2{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.35}
@@ -85,6 +88,29 @@ tr.total td{font-weight:600;border-top:2px solid var(--ink)}
 
 .points{display:grid;gap:10px;margin:0;padding:0;list-style:none}
 .points li{padding-left:14px;border-left:3px solid var(--accent-soft)}
+/* 採用〜稼働のプロセス */
+.funnel{display:grid;gap:6px}
+.f-row{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:12px;align-items:center}
+.f-row .lab{font-size:13px;font-weight:700}
+.f-row .bar{height:26px;border-radius:0 4px 4px 0;background:var(--accent);display:flex;align-items:center;padding-left:8px;color:var(--panel);font-family:var(--f-num);font-weight:600;font-size:13px;min-width:34px}
+.f-row .bar.end{background:var(--budget)}
+.f-row .r{font-family:var(--f-num);font-size:12px;color:var(--sub);text-align:right}
+.f-step{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:12px;font-size:12px;color:var(--sub)}
+.f-step span{grid-column:2;font-family:var(--f-num)}
+.f-step b.drop{color:var(--over)}
+.stall{display:grid;gap:12px}
+.s-row{display:grid;grid-template-columns:190px minmax(0,1fr);gap:4px 12px;align-items:center}
+.s-row .lab{font-size:13px}
+.s-row .lab b{font-family:var(--f-num);font-size:16px;margin-right:4px}
+.s-track{display:flex;height:24px}
+.s-track i{display:block;height:100%}
+.s-track i+i{border-left:1px solid var(--panel)}
+.a1{background:var(--age1)}.a2{background:var(--age2)}.a3{background:var(--age3)}.a4{background:var(--age4)}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.issues{display:grid;gap:12px;margin:0;padding:0;list-style:none;counter-reset:iss}
+.issues li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;counter-increment:iss}
+.issues li::before{content:counter(iss);font-family:var(--f-num);font-weight:600;color:var(--over);border:1.5px solid var(--over);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:12px}
+@media (max-width:560px){.f-row,.f-step{grid-template-columns:96px minmax(0,1fr) 64px}.s-row{grid-template-columns:minmax(0,1fr)}}
 .caveat{background:var(--warn-soft);border-color:transparent}
 .caveat h2{color:var(--warn)}
 footer{font-size:12px;color:var(--sub)}
@@ -171,6 +197,62 @@ footer{font-size:12px;color:var(--sub)}
       <li><b>採用までの単価は予算より十分安い。</b> 1採用あたりは Airwork ¥9,994、マイナビ ¥24,231。差が開くのは採用から稼働までで、Airwork は採用した10人に1人しか稼働まで届いていません。</li>
       <li><b>今の採用単価のまま予算に収めるには</b>、採用→稼働の到達率が Airwork で <b>18.2%</b>（現在 10.1%）、マイナビで <b>44.1%</b>（同 15.4%）必要です。</li>
       <li><b>マイナビは応募単価は Airwork 並みでも、応募→面接実施が 11.9%</b>（Airwork 26.1%）と低く、面接以降の単価が膨らんでいます。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>採用〜稼働のプロセスと滞留（現在の課題）</h2>
+    <p class="note">応募日 4/1以降で採用日がある Airwork・マイナビバイトの283人について、採用後の各段階に到達した人数（11/5時点）。後ろの段階の日付だけ入っている人は、手前の段階も通過したものとして数えています。</p>
+
+    <div class="funnel">
+      <div class="f-row"><div class="lab">採用</div><div><div class="bar" style="width:100%">283</div></div><div class="r">—</div></div>
+      <div class="f-step"><span>通過 92.2%（−22）</span></div>
+      <div class="f-row"><div class="lab">採用通知送付</div><div><div class="bar" style="width:92.2%">261</div></div><div class="r">累計 92.2%</div></div>
+      <div class="f-step"><span>通過 74.3%（−67）</span></div>
+      <div class="f-row"><div class="lab">契約チャット参加</div><div><div class="bar" style="width:68.6%">194</div></div><div class="r">累計 68.6%</div></div>
+      <div class="f-step"><span><b class="drop">通過 54.1%（−89）</b>　最大の落ち込み</span></div>
+      <div class="f-row"><div class="lab">契約書同意</div><div><div class="bar" style="width:37.1%">105</div></div><div class="r">累計 37.1%</div></div>
+      <div class="f-step"><span><b class="drop">通過 28.6%（−75）</b></span></div>
+      <div class="f-row"><div class="lab">研修完了（稼働）</div><div><div class="bar end" style="width:10.6%">30</div></div><div class="r">累計 10.6%</div></div>
+    </div>
+
+    <div class="tbl"><table>
+      <thead><tr><th>段階の通過率</th><th>採用→通知</th><th>通知→チャット</th><th>チャット→契約書</th><th>契約書→稼働</th><th>採用→稼働</th></tr></thead>
+      <tbody>
+        <tr><td>2媒体合算（283人）</td><td>92.2%</td><td>74.3%</td><td class="over">54.1%</td><td class="over">28.6%</td><td>10.6%</td></tr>
+        <tr><td>Airwork（257人）</td><td>91.4%</td><td>74.9%</td><td class="over">51.7%</td><td class="over">28.6%</td><td>10.1%</td></tr>
+        <tr><td>マイナビバイト（26人）</td><td>100%</td><td>69.2%</td><td>77.8%</td><td class="over">28.6%</td><td>15.4%</td></tr>
+        <tr><td>8月以降の採用（160人）<span class="sub">記録が揃っている期間</span></td><td>96.9%</td><td>80.0%</td><td class="over">56.5%</td><td>40.0%</td><td>17.5%</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 style="font-size:16px;margin-top:6px">いま止まっている人：196人</h2>
+    <p class="note">稼働にも辞退にもなっていない人を、最後に記録された段階ごとに並べています。色はその段階の日付から何日たったか。</p>
+    <div class="stall">
+      <div class="s-row"><div class="lab"><b>72人</b>チャット参加 → 契約書同意待ち</div><div class="s-track" style="width:90%"><i class="a1" style="width:5.6%"></i><i class="a2" style="width:6.9%"></i><i class="a3" style="width:8.3%"></i><i class="a4" style="width:79.2%"></i></div></div>
+      <div class="s-row"><div class="lab"><b>61人</b>契約書同意 → 研修完了待ち</div><div class="s-track" style="width:76.25%"><i class="a2" style="width:4.9%"></i><i class="a3" style="width:19.7%"></i><i class="a4" style="width:75.4%"></i></div></div>
+      <div class="s-row"><div class="lab"><b>46人</b>通知送付 → チャット参加待ち</div><div class="s-track" style="width:57.5%"><i class="a3" style="width:4.3%"></i><i class="a4" style="width:95.7%"></i></div></div>
+      <div class="s-row"><div class="lab"><b>17人</b>採用 → 通知送付待ち</div><div class="s-track" style="width:21.25%"><i class="a1" style="width:5.9%"></i><i class="a4" style="width:94.1%"></i></div></div>
+    </div>
+    <div class="legend"><span><span class="sw a1"></span>6日以内</span><span><span class="sw a2"></span>7〜13日</span><span><span class="sw a3"></span>14〜29日</span><span><span class="sw a4"></span>30日以上</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>滞留している段階</th><th>人数</th><th>6日以内</th><th>7〜13日</th><th>14〜29日</th><th>30日以上</th><th>うち4〜7月採用</th></tr></thead>
+      <tbody>
+        <tr><td>採用 → 通知送付待ち</td><td>17</td><td>1</td><td>0</td><td>0</td><td class="over">16</td><td>13</td></tr>
+        <tr><td>通知送付 → チャット参加待ち</td><td>46</td><td>0</td><td>0</td><td>2</td><td class="over">44</td><td>24</td></tr>
+        <tr><td>チャット参加 → 契約書同意待ち</td><td>72</td><td>4</td><td>5</td><td>6</td><td class="over">57</td><td>19</td></tr>
+        <tr><td>契約書同意 → 研修完了待ち</td><td>61</td><td>0</td><td>3</td><td>12</td><td class="over">46</td><td>20</td></tr>
+        <tr class="total"><td>計</td><td>196</td><td>5</td><td>8</td><td>20</td><td class="over">163</td><td>76</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">辞退（稼働前）は57人。止まった段階は 採用直後5／通知後21／チャット後17／契約書同意後14。理由の上位は「連絡が取れない・音信不通」14、「業務内容とのミスマッチ」10、「他社で採用が決まった」8。</p>
+
+    <h2 style="font-size:16px;margin-top:6px">現在の課題</h2>
+    <ul class="issues">
+      <li><div><b>契約書の同意で一番落ちている。</b> チャットに入った194人のうち契約書まで進んだのは105人（54.1%）。いまも72人がこの段階で止まっていて、滞留の中で最も多い。チャット参加後に契約書の同意を促す連絡・期限の設定が要ります。</div></li>
+      <li><div><b>契約書同意から研修完了まで進まない。</b> 同意した105人のうち稼働は30人（28.6%）。61人が研修完了待ちで止まり、うち46人は30日以上動きがありません。研修の日程確保と、未完了者へのフォローが弱い段階です。8月以降の採用に絞っても通過率は40.0%です。</div></li>
+      <li><div><b>滞留196人のうち163人（83%）は30日以上止まっている。</b> 実際には離脱しているのに辞退理由が付いていない人が多いとみられます（4〜7月採用だけで76人）。生きている候補者と閉じるべき人を分けないと、フォローの手が回らず、歩留まりも正しく測れません。</div></li>
+      <li><div><b>辞退理由の最多は音信不通。</b> 通知後・チャット後で止まって連絡が途切れるケースが多く、採用直後の数日で次の段階まで進めてしまう動きが効きます。</div></li>
     </ul>
   </section>
 
