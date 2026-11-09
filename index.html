@@ -111,6 +111,25 @@ tr.total td{font-weight:600;border-top:2px solid var(--ink)}
 .issues li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;counter-increment:iss}
 .issues li::before{content:counter(iss);font-family:var(--f-num);font-weight:600;color:var(--over);border:1.5px solid var(--over);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:12px}
 @media (max-width:560px){.f-row,.f-step{grid-template-columns:96px minmax(0,1fr) 64px}.s-row{grid-template-columns:minmax(0,1fr)}}
+/* リードタイム */
+.tl{display:flex;height:34px;border-radius:4px;overflow:hidden;font-family:var(--f-num);font-size:12px;font-weight:600}
+.tl i{display:flex;align-items:center;justify-content:center;font-style:normal;white-space:nowrap;overflow:hidden;color:var(--panel)}
+.tl i+i{border-left:2px solid var(--panel)}
+.tl .p0{background:var(--sub)}.tl .p1{background:var(--age1);color:var(--ink)}.tl .p2{background:var(--age3)}.tl .p3{background:var(--age4)}
+.tl-lab{display:flex;font-size:11px;color:var(--sub)}
+.tl-lab span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding-right:4px}
+.iqr{display:grid;gap:10px}
+.iqr-row{display:grid;grid-template-columns:170px minmax(0,1fr) 70px;gap:12px;align-items:center;font-size:13px}
+.iqr-row .r{font-family:var(--f-num);font-weight:600;text-align:right}
+.iqr-track{position:relative;height:18px;background:linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/calc(100%/6) 100%}
+.iqr-box{position:absolute;top:3px;bottom:3px;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:3px;min-width:3px}
+.iqr-med{position:absolute;top:0;bottom:0;width:0;border-left:3px solid var(--ink)}
+.iqr-row.hot .iqr-box{background:var(--over-soft);border-color:var(--over)}
+.iqr-axis{display:grid;grid-template-columns:170px minmax(0,1fr) 70px;gap:12px}
+.iqr-axis .ticks{position:relative;height:16px;font-family:var(--f-num);font-size:11px;color:var(--sub)}
+.iqr-axis .ticks span{position:absolute;transform:translateX(-50%)}
+.iqr-axis .ticks span:first-child{transform:none}
+@media (max-width:560px){.iqr-row,.iqr-axis{grid-template-columns:110px minmax(0,1fr) 52px}}
 .caveat{background:var(--warn-soft);border-color:transparent}
 .caveat h2{color:var(--warn)}
 footer{font-size:12px;color:var(--sub)}
@@ -246,6 +265,47 @@ footer{font-size:12px;color:var(--sub)}
       </tbody>
     </table></div>
     <p class="note">辞退（稼働前）は57人。止まった段階は 採用直後5／通知後21／チャット後17／契約書同意後14。理由の上位は「連絡が取れない・音信不通」14、「業務内容とのミスマッチ」10、「他社で採用が決まった」8。</p>
+
+    <h2 style="font-size:16px;margin-top:6px">各段階のリードタイム</h2>
+    <p class="note">前後2つの段階の日付が両方入っている人について、かかった日数を出しています（日付が前後逆の5件は除外）。下の帯は中央値を順につないだもので、応募から稼働まで<b>約26日</b>、採用から稼働まで<b>中央値20日</b>です。</p>
+    <div>
+      <div class="tl">
+        <i class="p0" style="width:23.5%">6日</i>
+        <i class="p1" style="width:3.9%" title="採用→通知送付 0日、通知送付→チャット参加 1日">1</i>
+        <i class="p2" style="width:31.4%">8日</i>
+        <i class="p3" style="width:41.2%">10.5日</i>
+      </div>
+      <div class="tl-lab"><span style="width:23.5%">応募→採用</span><span style="width:3.9%"></span><span style="width:31.4%">チャット参加→契約書同意</span><span style="width:41.2%">契約書同意→研修完了</span></div>
+      <p class="note" style="margin-top:4px">採用→通知送付（0日）と通知送付→チャット参加（1日）は細い帯の部分です。</p>
+    </div>
+
+    <div class="iqr">
+      <div class="iqr-row"><div>応募 → 採用</div><div class="iqr-track"><div class="iqr-box" style="left:13.33%;width:16%"></div><div class="iqr-med" style="left:20%"></div></div><div class="r">6日</div></div>
+      <div class="iqr-row"><div>採用 → 通知送付</div><div class="iqr-track"><div class="iqr-box" style="left:0;width:0"></div><div class="iqr-med" style="left:0"></div></div><div class="r">0日</div></div>
+      <div class="iqr-row"><div>通知送付 → チャット参加</div><div class="iqr-track"><div class="iqr-box" style="left:0;width:6.67%"></div><div class="iqr-med" style="left:3.33%"></div></div><div class="r">1日</div></div>
+      <div class="iqr-row hot"><div>チャット参加 → 契約書同意</div><div class="iqr-track"><div class="iqr-box" style="left:16.67%;width:20%"></div><div class="iqr-med" style="left:26.67%"></div></div><div class="r">8日</div></div>
+      <div class="iqr-row hot"><div>契約書同意 → 研修完了</div><div class="iqr-track"><div class="iqr-box" style="left:24%;width:22%"></div><div class="iqr-med" style="left:35%"></div></div><div class="r">10.5日</div></div>
+      <div class="iqr-row"><div><b>採用 → 研修完了（通し）</b></div><div class="iqr-track"><div class="iqr-box" style="left:50%;width:42.67%"></div><div class="iqr-med" style="left:66.67%"></div></div><div class="r">20日</div></div>
+      <div class="iqr-axis"><div></div><div class="ticks"><span style="left:0">0日</span><span style="left:33.33%">10</span><span style="left:66.67%">20</span><span style="left:100%">30</span></div><div></div></div>
+    </div>
+    <div class="legend"><span>黒線＝中央値</span><span>箱＝真ん中50%の人が収まる範囲</span><span>右の数字＝中央値</span></div>
+
+    <div class="tbl"><table>
+      <thead><tr><th>段階</th><th>対象</th><th>中央値</th><th>平均</th><th>真ん中50%</th><th>最長</th><th>7日以内に完了</th></tr></thead>
+      <tbody>
+        <tr><td>応募 → 採用</td><td>282人</td><td>6日</td><td>6.9日</td><td>4〜9日</td><td>47日</td><td>67%</td></tr>
+        <tr><td>採用 → 通知送付</td><td>253人</td><td>0日</td><td>2.1日</td><td>0〜0日</td><td>44日</td><td>92%<span class="sub">当日送付 88%</span></td></tr>
+        <tr><td>通知送付 → チャット参加</td><td>180人</td><td>1日</td><td>1.7日</td><td>0〜2日</td><td>32日</td><td>97%</td></tr>
+        <tr><td>チャット参加 → 契約書同意</td><td>99人</td><td class="over">8日</td><td>9.4日</td><td>5〜11日</td><td>33日</td><td class="over">45%</td></tr>
+        <tr><td>契約書同意 → 研修完了</td><td>30人</td><td class="over">10.5日</td><td>12.1日</td><td>7〜14日</td><td>48日</td><td class="over">27%</td></tr>
+        <tr class="total"><td>採用 → 研修完了（通し）</td><td>30人</td><td>20日</td><td>22.3日</td><td>15〜28日</td><td>65日</td><td>0%</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">8月以降の採用に絞っても、各段階の中央値は同じ（6／0／1／8／10日、通しで20日）で、期間による差はほぼありません。</p>
+    <ul class="points">
+      <li><b>採用から稼働までの時間の9割以上は、契約書同意と研修完了の2段階にかかっています</b>（中央値8日＋10.5日）。採用通知とチャット参加はほぼ当日〜翌日に済んでいます。離脱と滞留が多いのも同じ2段階です。</li>
+      <li><b>契約書の同意は、同意した人でも最長33日で終わっています。</b> いまこの段階で30日以上止まっている57人は、このまま待っても同意する見込みが低いと考えられます。研修完了も、完了した人の75%が14日以内です。</li>
+    </ul>
 
     <h2 style="font-size:16px;margin-top:6px">現在の課題</h2>
     <ul class="issues">
