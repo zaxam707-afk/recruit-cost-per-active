@@ -130,6 +130,14 @@ tr.total td{font-weight:600;border-top:2px solid var(--ink)}
 .iqr-axis .ticks span{position:absolute;transform:translateX(-50%)}
 .iqr-axis .ticks span:first-child{transform:none}
 @media (max-width:560px){.iqr-row,.iqr-axis{grid-template-columns:110px minmax(0,1fr) 52px}}
+.mchart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;height:170px;margin-top:8px;border-bottom:1px solid var(--ink);background:linear-gradient(0deg,var(--line) 1px,transparent 1px) 0 100%/100% 20%}
+.mchart .col{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center}
+.mchart .b{width:min(44px,80%);background:var(--accent);border-radius:3px 3px 0 0;position:relative}
+.mchart .b.thin{background:repeating-linear-gradient(135deg,var(--accent-soft) 0 5px,var(--line) 5px 10px)}
+.mchart .b.hot{background:var(--over)}
+.mchart .b span{position:absolute;bottom:calc(100% + 3px);left:50%;transform:translateX(-50%);font-family:var(--f-num);font-size:12px;font-weight:600;white-space:nowrap}
+.mlab{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;text-align:center;font-size:12px}
+.mlab small{display:block;color:var(--sub);font-family:var(--f-num);font-size:11px}
 .caveat{background:var(--warn-soft);border-color:transparent}
 .caveat h2{color:var(--warn)}
 footer{font-size:12px;color:var(--sub)}
@@ -305,6 +313,49 @@ footer{font-size:12px;color:var(--sub)}
     <ul class="points">
       <li><b>採用から稼働までの時間の9割以上は、契約書同意と研修完了の2段階にかかっています</b>（中央値8日＋10.5日）。採用通知とチャット参加はほぼ当日〜翌日に済んでいます。離脱と滞留が多いのも同じ2段階です。</li>
       <li><b>契約書の同意は、同意した人でも最長33日で終わっています。</b> いまこの段階で30日以上止まっている57人は、このまま待っても同意する見込みが低いと考えられます。研修完了も、完了した人の75%が14日以内です。</li>
+    </ul>
+
+    <h2 style="font-size:16px;margin-top:6px">チャット参加 → 契約書同意のリードタイム（月次）</h2>
+    <p class="note">チャットに参加した月ごとに、契約書に同意した人の所要日数（中央値）を並べています。棒の下は、その月にチャットに参加した人のうち同意済みの割合です。</p>
+    <div>
+      <div class="mchart" aria-label="チャット参加月別の契約書同意までの日数（中央値）">
+        <div class="col"><div class="b thin" style="height:80%"><span>20日</span></div></div>
+        <div class="col"><div class="b" style="height:32%"><span>8日</span></div></div>
+        <div class="col"><div class="b" style="height:32%"><span>8日</span></div></div>
+        <div class="col"><div class="b" style="height:20%"><span>5日</span></div></div>
+        <div class="col"><div class="b" style="height:24%"><span>6日</span></div></div>
+        <div class="col"><div class="b" style="height:30%"><span>7.5日</span></div></div>
+        <div class="col"><div class="b hot" style="height:44%"><span>11日</span></div></div>
+      </div>
+      <div class="mlab">
+        <div>4月<small>3/4人 同意</small></div>
+        <div>5月<small>62%</small></div>
+        <div>6月<small>44%</small></div>
+        <div>7月<small>39%</small></div>
+        <div>8月<small>29%</small></div>
+        <div>9月<small>88%</small></div>
+        <div>10月<small>57%・途中</small></div>
+      </div>
+      <p class="note" style="margin-top:6px">目盛りは5日刻み（上端25日）。4月は同意者3人だけなので斜線で参考扱い。</p>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>チャット参加月</th><th>参加</th><th>同意済</th><th>同意率</th><th>辞退</th><th>未同意</th><th>中央値</th><th>平均</th><th>真ん中50%</th><th>7日以内に同意</th></tr></thead>
+      <tbody>
+        <tr><td>4月</td><td>4</td><td>3</td><td>75%</td><td>1</td><td>0</td><td>20日</td><td>21.7日</td><td>20〜23日</td><td>0%</td></tr>
+        <tr><td>5月</td><td>13</td><td>8</td><td>62%</td><td>5</td><td>0</td><td>8日</td><td>8.2日</td><td>7〜11日</td><td>38%</td></tr>
+        <tr><td>6月</td><td>16</td><td>7</td><td>44%</td><td>4</td><td>5</td><td>8日</td><td>9.9日</td><td>5〜11日</td><td>43%</td></tr>
+        <tr><td>7月</td><td>28</td><td>11</td><td>39%</td><td>5</td><td>12</td><td>5日</td><td>5.0日</td><td>2〜8日</td><td>73%</td></tr>
+        <tr><td>8月</td><td>51</td><td>15</td><td class="over">29%</td><td>2</td><td class="over">34</td><td>6日</td><td>9.3日</td><td>3〜18日</td><td>60%</td></tr>
+        <tr><td>9月</td><td>43</td><td>38</td><td class="ok">88%</td><td>0</td><td>5</td><td>7.5日</td><td>8.8日</td><td>5〜10日</td><td>50%</td></tr>
+        <tr><td>10月<span class="sub">途中</span></td><td>30</td><td>17</td><td>57%</td><td>0</td><td>13</td><td class="over">11日</td><td>11.9日</td><td>10〜15日</td><td class="over">18%</td></tr>
+        <tr><td>11月<span class="sub">〜5日</span></td><td>3</td><td>0</td><td>—</td><td>0</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr class="total"><td>計</td><td>188</td><td>99</td><td>53%</td><td>17</td><td>72</td><td>8日</td><td>9.4日</td><td>5〜11日</td><td>45%</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="points">
+      <li><b>10月は同意までの日数が11日に延びています</b>（7〜9月は5〜7.5日）。7日以内に同意した人も18%しかいません（9月は50%）。10月はまだ13人が未同意なので、全員が決まればさらに延びます。</li>
+      <li><b>8月はチャットに入った51人のうち同意は15人</b>で、34人が未同意のまま止まっています。いまこの段階で滞留している72人のうち半分近くが8月参加の人です。</li>
+      <li><b>9月は同意率88%</b>と、4月以降で最も高くなりました。9月のやり方を確認して10月以降に戻せると、この段階の詰まりが解消します。</li>
     </ul>
 
     <h2 style="font-size:16px;margin-top:6px">現在の課題</h2>
